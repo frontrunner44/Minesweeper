@@ -1,0 +1,60 @@
+body {
+  text-align:center;
+  background-color: #403f3f;
+}
+
+#grid {
+  width: 570px;
+  height: 570px;
+  float: left;
+}
+
+#container {
+  display: inline-block;
+}
+
+#rules {
+  float:left;  
+  border: 5px solid white;
+  width: 500px;
+  min-height: 398px;
+  margin-right: 20px;
+  background-color: white;
+}
+
+ul {
+  text-align: left;
+  list-style: none;
+}
+
+li {
+  margin-bottom: 10px;
+  border-bottom: 1px solid #e6e5e5;
+}
+
+#title {
+  color: white;
+  margin-bottom: 0px;
+}
+
+#score {
+  color: white;
+}
+
+p {
+  color: white;
+  margin-top: 5px;
+}
+
+button {
+  margin-bottom: 10px;
+}
+
+.cell {
+  width: 15px;
+  height: 15px;
+  background-color: grey;
+  float: left;
+  border-style: outset;
+  border-width: 2px;
+}
