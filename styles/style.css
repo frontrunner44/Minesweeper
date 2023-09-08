@@ -1,6 +1,6 @@
 body {
   text-align:center;
-  background-color: #403f3f;
+  background: linear-gradient(0deg, #434242 0%, #000000 0%, #363535 87%);
 }
 
 #grid {

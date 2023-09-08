@@ -15,8 +15,10 @@ const gameDefaults = {
 	started:false,
 	difficultySetting:1,
 	difficulty:[50,80,140],
-	clearColor:"white",
-	flagged:"none"
+	clearedColor:"white",
+	unclearedColor:"grey",
+	flagged:"none",
+	score:0,
 }
 let game = structuredClone(gameDefaults); // Clones the default values from the gameDefaults object into a new usable object called game.
 
@@ -86,16 +88,16 @@ $("button").click(function(){
 });
 
 // Cell clearing and checking logic
-function checkCells(a) { // Parameter takes the index from the clicked cell.
-	let cellIndex = [a]; // Adds the clicked cell to the first index of the array that holds the cells to check.
-	for(let i=0; i<cellIndex.length; i++) { // Iterates through each cell that needs checking
-		let x = cellIndex[i];
+function checkCells(clickedCell) { // Parameter takes the position value from the clicked cell.
+	let cellIndex = [clickedCell]; // Adds the clicked cell's position to the array that holds the cell positions to check.
+	for(let i=0; i<cellIndex.length; i++) { // Iterates through the array of cell positions we need to check
+		let x = cellIndex[i]; // sets the value of x to the position at array index i -- basically, x gets the position on the grid (from the array) we need to check during each iteration
 		if(game.cell[x].cleared === false && game.started === true && game.cell[x].bomb === false) { // Checks if the currenct cell isn't cleared, has no bombs and the game hasn't ended
 			clearThisCell(cellIndex[i]); 
 			if(game.cell[x].nearby === 0) {
 				// directional checks here -- check direction AND whether the adjacent cell is already in cellIndex[]
 				if(!game.cell[x].leftEdge && !cellIndex.includes(x-1)) { // Check current cell for being on the left
-					cellIndex.push(x-1);
+					cellIndex.push(x-1); // pushes the cell position to the cellIndex array so that it is evalulated/checked during the loop
 				}
 				if(!game.cell[x].rightEdge && !cellIndex.includes(x+1)) { // Check if current cell isn't on the right edge.
 					cellIndex.push(x+1); 
@@ -135,11 +137,13 @@ function checkCells(a) { // Parameter takes the index from the clicked cell.
 function clearThisCell(i) {
 	game.cell[i].cleared = true;
 	game.cell[i].flagged = "none";
-	$(".cell").eq(i).css("background-color",game.clearColor); // change this later for better visuals
+	$(".cell").eq(i).css("background-color",game.clearedColor); // change this later for better visuals
 	$(".cell").eq(i).html(""); // Removes any flags
 	if(game.cell[i].nearby !== 0) {
 		$(".cell").eq(i).html("<span style='color:blue'>"+game.cell[i].nearby+"</span>"); // logic for displaying the nearby number on the cell here
 	}
+	let element = document.getElementById("scount");
+	element.innerHTML = `${game.score += 10}`;
 }
 
 function generateBombs(amount) {
