@@ -58,3 +58,11 @@ button {
   border-style: outset;
   border-width: 2px;
 }
+
+.cleared {
+  background-color: white;
+}
+
+.bombreveal {
+  background-color: red;
+}
