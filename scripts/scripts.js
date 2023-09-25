@@ -92,7 +92,7 @@ function checkCells(clickedCell) { // Parameter takes the position value from th
 	let cellIndex = [clickedCell]; // Adds the clicked cell's position to the array that holds the cell positions to check.
 	for(let i=0; i<cellIndex.length; i++) { // Iterates through the array of cell positions we need to check
 		let x = cellIndex[i]; // sets the value of x to the position at array index i -- basically, x gets the position on the grid (from the array) we need to check during each iteration
-		if(game.cell[x].cleared === false && game.started === true && game.cell[x].bomb === false) { // Checks if the currenct cell isn't cleared, has no bombs and the game hasn't ended
+		if(!game.cell[x].cleared && game.started && !game.cell[x].bomb) { // Checks if the currenct cell isn't cleared, has no bombs and the game hasn't ended
 			clearThisCell(cellIndex[i]); 
 			if(game.cell[x].nearby === 0) {
 				// directional checks here -- check direction AND whether the adjacent cell is already in cellIndex[]
