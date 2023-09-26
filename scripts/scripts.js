@@ -45,9 +45,7 @@ window.onload = function() {
 function rightClickFlagging(event, element) {
   event.preventDefault(); // Prevent the default context menu
   const flag = element.innerHTML;
-
   switch(flag) {
-
     case "":
       element.innerHTML = "?";
       break;
@@ -116,19 +114,19 @@ function cellClicked(a, b) {
   }
   a = parseInt(a); // To avoid any wonky string business
   b = parseInt(b); // To avoid any wonky string business
-  const clearTheseCells = []; // Create an array that will hold all cells we need to clear.
+  const cellClearingQueue = []; // Create an array that will hold all cells we need to clear.
   if(!game.grid[a][b].cleared && !game.grid[a][b].bomb) { // If the cell we just clicked is cleared, does not contain a bomb and the game has started
-    clearTheseCells.push([a, b]); // We push it to the array of cells we need to clear
-    for(i = 0; i < clearTheseCells.length; i++) {
-      const x = clearTheseCells[i][0];
-      const y = clearTheseCells[i][1];
+    cellClearingQueue.push([a, b]); // We push it to the array of cells we need to clear
+    for(i = 0; i < cellClearingQueue.length; i++) {
+      const x = cellClearingQueue[i][0];
+      const y = cellClearingQueue[i][1];
       clearCell(x, y); // Reveals the cell
-      if(game.grid[x][y].nearby === 0) { // If the cell just cleared has 0 nearby, we clear all cells adjacent to them by pushing them into the clearTheseCells array.
+      if(game.grid[x][y].nearby === 0) { // If the cell just cleared has 0 nearby, we clear all cells adjacent to them by pushing them into the cellClearingQueue array.
         for(const adjustment of game.directions) { // Cycles through each set of coordinates from the directions array
           const newX = x+adjustment[0];
           const newY = y+adjustment[1];
-          if(isInsideGrid(newX, newY) && !alreadyInClearArray(newX, newY)) { // If this new cell location is inside of the grid area and not already in the clearTheseCells array,
-            clearTheseCells.push([newX, newY]); // we add it to the clearTheseCells array.
+          if(isInsideGrid(newX, newY) && !alreadyInClearArray(newX, newY)) { // If this new cell location is inside of the grid area and not already in the cellClearingQueue array,
+            cellClearingQueue.push([newX, newY]); // we add it to the cellClearingQueue array.
           }
         }
       }
@@ -138,9 +136,9 @@ function cellClicked(a, b) {
     revealBombs();
     alert("You clicked a bomb. GAME OVER! Choose a difficulty setting to start a new game.")
   }
-  // Helper function to check whether a cell's coordinates were already added to the clearTheseCells array.
+  // Helper function to check whether a cell's coordinates were already added to the cellClearingQueue array.
   function alreadyInClearArray(x, y) {
-    for(const coordinate of clearTheseCells) { // Cycle through the coordinates in clearTheseCells
+    for(const coordinate of cellClearingQueue) { // Cycle through the coordinates in cellClearingQueue
       if(coordinate[0] === x && coordinate[1] === y) { // If both the x and y coordinates match, then the cell coordinates already exist in the array and we return true
         return true;
       }
@@ -165,7 +163,6 @@ function isInsideGrid(x, y) {
 function clearCell(x, y) {
   cell = game.grid[x][y];
   cell.cleared = true;
-  cell.flagged = "";
   cell.element.classList.add("cleared");
   cell.nearby !== 0 ? cell.element.innerHTML = cell.nearby : cell.element.innerHTML = "";
 }
