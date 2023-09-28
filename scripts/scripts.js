@@ -1,17 +1,17 @@
 const gameDefaults = {
   columns: 30,
-	rows: 30,
-	started: false,
-	difficultySetting: 1,
-	difficulty: [50,80,140],
-	clearedCClass: "cleared",
-	score: 0,
+  rows: 30,
+  started: false,
+  difficultySetting: 1,
+  difficulty: [50,80,140],
+  clearedCClass: "cleared",
+  score: 0,
   grid: [],
   bombLocations: [],
   cellDefaults: {
     bomb: false,
-		cleared: false,
-		nearby: 0,
+    cleared: false,
+    nearby: 0,
     element: undefined,
   },
   directions: [[-1, 0], [-1, -1], [0, -1], [+1, -1], [+1, 0], [+1, +1], [0, +1], [-1, +1]] // For directional checks
@@ -47,14 +47,14 @@ function rightClickFlagging(event, element) {
   const flag = element.innerHTML;
   switch(flag) {
     case "":
-      element.innerHTML = "?";
-      break;
-    
-    case "?":
       element.innerHTML = "!";
       break;
-
+    
     case "!":
+      element.innerHTML = "?";
+      break;
+
+    case "?":
       element.innerHTML = "";
       break;
   }
