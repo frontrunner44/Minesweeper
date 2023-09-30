@@ -26,6 +26,9 @@ class Cell {
     this.cleared = false;
     this.nearby = 0;
     this.element = element;
+    element.classList.remove(...element.classList); // Remove any addded css styling
+    element.classList.add(game.defaultCSS); // Readds the default styling
+    element.innerHTML = ""; // Resets inner HTML to empty.
   }
 }
 
@@ -44,9 +47,6 @@ class Grid {
        }
        const element = document.querySelector(`[data-x="${x}"][data-y="${y}"]`); // Grab the respective DOM element
        this.cell[x][y] = new Cell(element); // Create a new cell in this index and send the respective DOM element as a parameter so it can hold it as a reference
-       this.cell[x][y].element.classList.remove(...this.cell[x][y].element.classList); // Remove any addded css styling
-       this.cell[x][y].element.classList.add(game.defaultCSS); // Readds the default styling
-       this.cell[x][y].element.innerHTML = ""; // Resets inner HTML to empty.
       }
     }
   }
