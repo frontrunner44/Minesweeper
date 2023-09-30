@@ -69,6 +69,7 @@ class Grid {
     cell.nearby !== 0 ? cell.element.innerHTML = cell.nearby : cell.element.innerHTML = "";
   }
 }
+
 let game = new Game();
 let grid;
 
@@ -111,9 +112,7 @@ function rightClickFlagging(event, element) {
 }
 
 function difficultyClick(index, difficulty) {
-  if(index === game.difficultySetting) {
-    return;
-  } else if(confirm(`Do you want to start a new game with difficulty: ${difficulty}?`)) {
+  if(confirm(`Do you want to start a new game with difficulty: ${difficulty}?`)) {
     resetGame();
     element = document.getElementById("diff");
     element.innerHTML = difficulty;
